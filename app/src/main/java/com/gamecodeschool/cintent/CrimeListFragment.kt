@@ -16,6 +16,7 @@ private const val TAG = "CrimeListFragment"
 class CrimeListFragment : Fragment() {
 
     private lateinit var crimeRecyclerView: RecyclerView
+    private var adapter: CrimeAdapter? = null
     private val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
     }
@@ -35,7 +36,14 @@ class CrimeListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_crime_list, container, false)
         crimeRecyclerView = view.findViewById(R.id.crime_recycler_view) as RecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context) //RecyclerView не отображает элементы на самом экране. Он передает эту задачу объекту LayoutManager.
+        updateUI()
         return view
+    }
+
+    private fun updateUI() {
+        val crimes = crimeListViewModel.crimes
+        adapter = CrimeAdapter(crimes)
+        crimeRecyclerView.adapter = adapter
     }
 
     //RecyclerView никогда не создает объекты View сам по
