@@ -1,4 +1,4 @@
-package database
+package com.gamecodeschool.cintent.database
 
 import androidx.room.TypeConverter
 import java.util.*
