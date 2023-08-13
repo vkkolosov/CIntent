@@ -1,16 +1,18 @@
 package com.gamecodeschool.cintent.database
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.gamecodeschool.cintent.Crime
+import java.io.File
 import java.util.*
 
 private const val DATABASE_NAME = "crime-database"
 
 class CrimeRepository private constructor(context: Context) {
 
-    private val database : CrimeDatabase =
-        //создает конкретную
+    private val database: CrimeDatabase =
+    //создает конкретную
         //реализацию вашего абстрактного класса CrimeDatabase
         Room.databaseBuilder(
             //Сначала ему нужен объект
@@ -26,10 +28,11 @@ class CrimeRepository private constructor(context: Context) {
             //создаст Room
             DATABASE_NAME
         ).build()
+
     private val crimeDao = database.crimeDao()
 
-    fun getCrimes(): List<Crime> = crimeDao.getCrimes()
-    fun getCrime(id: UUID): Crime? = crimeDao.getCrime(id)
+    fun getCrimes(): LiveData<List<Crime>> = crimeDao.getCrimes()
+    fun getCrime(id: UUID): LiveData<Crime?> = crimeDao.getCrime(id)
 
     companion object {
         private var INSTANCE: CrimeRepository? = null
